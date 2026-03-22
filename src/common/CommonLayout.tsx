@@ -79,12 +79,12 @@ function CommonLayout({ children }: CommonLayoutProps) {
               Home
             </NavLink>
             <NavLink
-              to="/about"
+              to="/coin"
               onClick={closeMenu}
               className={({ isActive }) => (isActive ? 'is-active' : undefined)}
             >
               <span className="menu-dot" aria-hidden />
-              About
+              Coin
             </NavLink>
           </nav>
         </aside>

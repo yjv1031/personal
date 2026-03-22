@@ -1,7 +1,7 @@
 
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Home from './page/home/Home'
-import About from './page/about/About'
+import Coin from './page/coin/Coin'
 import NotFound from './page/not-found/NotFound'
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Navigate to="/home" replace />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/about" element={<About />} />
+      <Route path="/coin" element={<Coin />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )
