@@ -59,7 +59,6 @@ function Home() {
     <CommonLayout>
       <section className="lotto">
         <h2>Lotto Number Generator</h2>
-        {games.length === 0 && <p>버튼을 누르면 5게임 번호를 생성합니다.</p>}
         <button type="button" onClick={handleGenerate}>
           5게임 생성
         </button>
