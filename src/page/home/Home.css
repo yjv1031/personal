@@ -1,0 +1,59 @@
+.lotto {
+  display: grid;
+  gap: 14px;
+}
+
+.lotto h2 {
+  font-size: 24px;
+  color: #0f172a;
+}
+
+.lotto p {
+  color: #475569;
+}
+
+.lotto button {
+  width: fit-content;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #93c5fd;
+  background: #dbeafe;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.generated-time {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.lotto ul {
+  display: grid;
+  gap: 10px;
+}
+
+.lotto li {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #dbeafe;
+  background: #f8fbff;
+}
+
+.balls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.balls span {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  color: #0b3aa4;
+  background: #e0e7ff;
+}
