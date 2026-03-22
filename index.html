@@ -5,10 +5,19 @@
     <link rel="icon" type="image/svg+xml" href="/personal/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>personal</title>
-    <script type="module" crossorigin src="/personal/assets/index-CkBJRw9r.js"></script>
+    <script type="module" crossorigin src="/personal/assets/index-Qg0OYzx2.js"></script>
     <link rel="stylesheet" crossorigin href="/personal/assets/index-D64VDMd1.css">
   </head>
   <body>
+    <script>
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var redirect = params.get('p');
+        if (redirect) {
+          window.history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
     <div id="root"></div>
   </body>
 </html>
