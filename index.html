@@ -12,7 +12,11 @@
         var params = new URLSearchParams(window.location.search);
         var redirect = params.get('p');
         if (redirect) {
-          window.history.replaceState(null, null, redirect);
+          var normalized = redirect.startsWith('/') ? redirect : '/' + redirect;
+          var target = normalized.startsWith('/personal/')
+            ? normalized
+            : '/personal' + normalized;
+          window.history.replaceState(null, null, target);
         }
       })();
     </script>

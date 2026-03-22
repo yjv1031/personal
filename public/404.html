@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+    <script>
+      (function () {
+        var repoBase = '/personal';
+        var path = window.location.pathname.replace(/^\/personal/, '');
+        var normalizedPath = path || '/';
+        var newUrl =
+          window.location.protocol +
+          '//' +
+          window.location.hostname +
+          (window.location.port ? ':' + window.location.port : '') +
+          repoBase +
+          '/?p=' +
+          encodeURIComponent(
+            normalizedPath + window.location.search + window.location.hash
+          );
+
+        window.location.replace(newUrl);
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
