@@ -1,0 +1,53 @@
+.common-layout {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.common-header {
+  height: 64px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e2e8f0;
+  background: #ffffff;
+}
+
+.common-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.common-nav {
+  display: flex;
+  gap: 12px;
+}
+
+.common-nav a {
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: #334155;
+}
+
+.common-nav a:hover {
+  background: #e2e8f0;
+}
+
+.common-main {
+  width: min(960px, 100%);
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+
+.common-footer {
+  height: 52px;
+  border-top: 1px solid #e2e8f0;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  color: #64748b;
+  background: #ffffff;
+}
