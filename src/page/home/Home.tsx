@@ -69,7 +69,6 @@ function Home() {
             <ul>
               {games.map((game, gameIndex) => (
                 <li key={`game-${gameIndex}`}>
-                  <strong>{gameIndex + 1}게임</strong>
                   <div className="balls">
                     {game.map((num) => (
                       <span key={`${gameIndex}-${num}`}>{num}</span>
