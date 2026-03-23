@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import type { KLineData } from 'klinecharts'
 import CommonLayout from '../../common/CommonLayout'
 import CoinChart from './component/CoinChart'
+import './Coin.css'
 
 type UpbitDayCandle = {
   timestamp: number
@@ -41,6 +42,7 @@ const ACTIVE_MARKETS = [
 
 const COIN_CACHE_KEY = 'coin_ranking_cache_v1'
 const CACHE_TTL_MS = 3 * 60 * 60 * 1000
+const FETCH_INTERVAL_MS = 1000
 
 function toSafeGap(value: number | undefined): number {
   if (typeof value === 'number' && Number.isFinite(value)) {
@@ -75,6 +77,12 @@ function writeCache(stats: BreakoutStat[]) {
 
   localStorage.removeItem(COIN_CACHE_KEY)
   localStorage.setItem(COIN_CACHE_KEY, JSON.stringify(payload))
+}
+
+function sleep(ms: number) {
+  return new Promise<void>((resolve) => {
+    setTimeout(resolve, ms)
+  })
 }
 
 function analyzeRecent3DayGap(closes: number[], period = 20, stdMultiplier = 2) {
@@ -170,6 +178,8 @@ function Coin() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [lastFetchedAt, setLastFetchedAt] = useState<number | null>(null)
+  const [loadedCount, setLoadedCount] = useState(0)
+  const [currentMarket, setCurrentMarket] = useState<string | null>(null)
 
   useEffect(() => {
     let cancelled = false
@@ -177,10 +187,12 @@ function Coin() {
     const load = async () => {
       setIsLoading(true)
       setError(null)
+      setLoadedCount(0)
+      setCurrentMarket(null)
 
-       const cached = readCache()
+      const cached = readCache()
       const canUseCache = cached && Date.now() - cached.fetchedAt < CACHE_TTL_MS
-       if (canUseCache) {
+      if (canUseCache) {
         setStats(cached.stats)
         setLastFetchedAt(cached.fetchedAt)
         setIsLoading(false)
@@ -188,7 +200,29 @@ function Coin() {
       }
 
       try {
-        const results = await Promise.all(ACTIVE_MARKETS.map((market) => fetchBreakoutStat(market)))
+        const results: BreakoutStat[] = []
+
+        for (let i = 0; i < ACTIVE_MARKETS.length; i += 1) {
+          if (cancelled) {
+            return
+          }
+
+          const market = ACTIVE_MARKETS[i]
+          setCurrentMarket(market)
+
+          const result = await fetchBreakoutStat(market)
+          if (cancelled) {
+            return
+          }
+
+          results.push(result)
+          setLoadedCount(i + 1)
+
+          if (i < ACTIVE_MARKETS.length - 1) {
+            await sleep(FETCH_INTERVAL_MS)
+          }
+        }
+
         if (cancelled) {
           return
         }
@@ -212,6 +246,7 @@ function Coin() {
         }
       } finally {
         if (!cancelled) {
+          setCurrentMarket(null)
           setIsLoading(false)
         }
       }
@@ -232,7 +267,18 @@ function Coin() {
         Latest fetched: {lastFetchedAt ? new Date(lastFetchedAt).toLocaleString() : '-'}
       </p>
 
-      {isLoading && <p style={{ marginTop: '10px' }}>Loading...</p>}
+      {isLoading && (
+        <div className="coin-loading-layer" aria-live="polite" aria-busy>
+          <div className="coin-loading-card">
+            <span className="coin-spinner" aria-hidden />
+            <p>Loading coin charts...</p>
+            <p className="coin-loading-progress">
+              {loadedCount}/{ACTIVE_MARKETS.length}
+              {currentMarket ? ` (${currentMarket})` : ''}
+            </p>
+          </div>
+        </div>
+      )}
       {error && <p style={{ marginTop: '10px', color: '#dc2626' }}>{error}</p>}
 
       {!isLoading &&
