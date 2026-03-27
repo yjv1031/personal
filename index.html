@@ -2,10 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <link rel="icon" type="image/svg+xml" href="/personal/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>personal</title>
-    <script type="module" crossorigin src="/personal/assets/index-BjoH582a.js"></script>
+    <script type="module" crossorigin src="/personal/assets/index-c_n24Mk8.js"></script>
     <link rel="stylesheet" crossorigin href="/personal/assets/index-ffTcInxS.css">
   </head>
   <body>
@@ -14,11 +17,13 @@
         var params = new URLSearchParams(window.location.search);
         var redirect = params.get('p');
         if (redirect) {
+          params.delete('p');
+          var rest = params.toString();
           var normalized = redirect.startsWith('/') ? redirect : '/' + redirect;
           var target = normalized.startsWith('/personal/')
             ? normalized
             : '/personal' + normalized;
-          window.history.replaceState(null, null, target);
+          window.history.replaceState(null, null, rest ? target + '?' + rest : target);
         }
       })();
     </script>
