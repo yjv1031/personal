@@ -2,6 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>personal</title>
@@ -12,11 +15,13 @@
         var params = new URLSearchParams(window.location.search);
         var redirect = params.get('p');
         if (redirect) {
+          params.delete('p');
+          var rest = params.toString();
           var normalized = redirect.startsWith('/') ? redirect : '/' + redirect;
           var target = normalized.startsWith('/personal/')
             ? normalized
             : '/personal' + normalized;
-          window.history.replaceState(null, null, target);
+          window.history.replaceState(null, null, rest ? target + '?' + rest : target);
         }
       })();
     </script>
