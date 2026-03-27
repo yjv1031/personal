@@ -17,8 +17,8 @@ function CommonLayout({ children }: CommonLayoutProps) {
       <div className="common-layout">
         <header className="common-header">
           <div className="header-left">
-            <p className="common-eyebrow">MY APP</p>
-            <h1 className="common-title">personal</h1>
+            <p className="common-eyebrow">화이팅</p>
+            <h1 className="common-title">한성수!</h1>
           </div>
           <div className="header-right">
             <span className="header-status">Online</span>
